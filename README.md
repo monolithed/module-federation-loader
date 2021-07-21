@@ -55,8 +55,8 @@ const LazyService: FunctionComponent<Props> = ({children, src, scope, module}): 
 
 ## Options
 
-**scope** (required)
-**module** (required)
+* **scope** (required)
+* **module** (required)
 
 ## Publishing
 
