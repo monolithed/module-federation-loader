@@ -1,24 +1,16 @@
 {
     "compilerOptions": {
         "lib": [
-            "DOM",
-            "ES2015"
+            "es2017",
+            "dom"
         ],
-        "baseUrl": ".",
-        "strict": true,
-        "module": "esnext",
-        "target": "ES2017",
-        "jsx": "react",
+        "target": "es2017",
+        "module": "commonjs",
         "moduleResolution": "node",
-        "allowJs": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "declaration": false,
-        "noImplicitAny": true,
-        "forceConsistentCasingInFileNames": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true,
-        "skipLibCheck": true,
-        "sourceMap": true
+        "strict": true,
+        "declaration": true,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true
     }
 }
