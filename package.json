@@ -1,0 +1,24 @@
+{
+    "name": "@monolithed/remote-component-loader",
+    "version": "0.1.0",
+    "description": "A Webpack module for dynamically loading remote components",
+    "author": "Alexander Abashkin <monolithed@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:monolithed/remote-component-loader.git"
+    },
+    "scripts": {
+        "test": "npm prune && tsc",
+        "tsc": "tsc",
+        "prepublishOnly": "tsc"
+    },
+    "peerDependencies": {
+        "react": "^17.0.2"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.14",
+        "react": "^17.0.2",
+        "typescript": "^4.3.5"
+    }
+}
