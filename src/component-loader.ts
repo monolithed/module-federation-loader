@@ -8,7 +8,7 @@ const componentLoader = ({scope, module}: Options) => {
         try {
             await __webpack_init_sharing__('default');
 
-            const container: SharedWebpackContainer = window[scope];
+            const container: SharedWebpackContainer = (<any>window)[scope];
 
             await container.init(__webpack_share_scopes__.default);
 
