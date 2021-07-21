@@ -1,6 +1,6 @@
 {
     "name": "@monolithed/remote-component-loader",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "A Webpack module for dynamically loading remote components",
     "author": "Alexander Abashkin <monolithed@gmail.com>",
     "license": "MIT",
