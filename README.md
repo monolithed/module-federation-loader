@@ -32,8 +32,12 @@ import React, {
     useEffect
 } from 'react';
 
+import {
+    addScript, 
+    remoteLoader
+} from '@monolithed/module-federation-loader';
+
 import ky from 'ky';
-import {addScript, remoteLoader} from '@monolithed/module-federation-loader';
 
 type Props = {
     bundle: string;
