@@ -122,6 +122,7 @@ export {Example};
 
 ```tsx
 // App.tsx
+
 import React, {
     FunctionComponent
 } from 'react';
