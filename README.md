@@ -60,8 +60,7 @@ const useBundle = (name: string) => {
         let abortController = new AbortController();
 
         (async (): Promise<void> => {
-            let src = await fetchBundle(name);
-
+            let {src} = await fetchBundle(name);
             const {script} = await addScript({src});
 
             setBundle(script);
