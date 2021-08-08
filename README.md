@@ -24,6 +24,8 @@ yarn add @monolithed/module-federation-loader
 ## Basic usage
 
 ```typescript
+// Todo.tsx
+
 import React, {
     FunctionComponent,
     Suspense,
@@ -84,7 +86,7 @@ type ServiceComponent<Props> = FunctionComponent<Props> & {
     Component: FunctionComponent<any>;
 };
 
-const LazyService: FunctionComponent<Props> = ({children, bundle, module}): JSX.Element => {
+const LazyBundle: FunctionComponent<Props> = ({children, bundle, module}): JSX.Element => {
     const {loading} = useBundle(bundle);
     const remoteModule = remoteLoader({bundle, module});
     const RemoteComponent = lazy(remoteModule);
@@ -99,24 +101,67 @@ const LazyService: FunctionComponent<Props> = ({children, bundle, module}): JSX.
 const Component: FunctionComponent<any> = (props) => {
     return <div {...props} />;
 };
-
 ```
 
 ```tsx
+// Todo.tsx
+
 import React, {FunctionComponent} from 'react';
 import {LazyModule} from './LazyModule';
 
 const Todo: FunctionComponent<any> = () => {
     return (
-        <LazyModule scope="todo" component="./List">
-            <LazyModule.Component />
-        </LazyModule>
+        <LazyBundle scope="todo" component="./List">
+            <LazyBundle.Component />
+        </LazyBundle>
     );
 };
 
 export {Example};
 ```
 
+```tsx
+// App.tsx
+import React, {
+    FunctionComponent
+} from 'react';
+
+import {
+    BrowserRouter,
+    Switch,
+    Route
+} from 'react-router-dom';
+
+const App: FunctionComponent<Props> = () => (
+    <BrowserRouter>
+        <Switch>
+            <Route path="/">
+                <Todo />
+            </Route>
+        </Switch>
+    </BrowserRouter>
+);
+
+export {App};
+```
+
+```typescript
+// Bootstrap.tsx
+
+import React from 'react';
+import {render} from 'react-dom';
+import {App} from './App';
+
+const root = document.getElementById('root');
+
+render(<App />, root);
+```
+
+```typescript
+// index.ts
+
+(async () => await import('./Bootstrap'))();
+```
 ## Options
 
 * **bundle** (required)
