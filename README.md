@@ -80,6 +80,10 @@ const useBundle = (name: string) => {
     return {loading};
 };
 
+type ServiceComponent<Props> = FunctionComponent<Props> & {
+    Component: FunctionComponent<any>;
+};
+
 const LazyService: FunctionComponent<Props> = ({children, bundle, module}): JSX.Element => {
     const {loading} = useBundle(bundle);
     const remoteModule = remoteLoader({bundle, module});
@@ -91,6 +95,26 @@ const LazyService: FunctionComponent<Props> = ({children, bundle, module}): JSX.
         </Suspense>
     );
 };
+
+const Component: FunctionComponent<any> = (props) => {
+    return <div {...props} />;
+};
+
+```
+
+```tsx
+import React, {FunctionComponent} from 'react';
+import {LazyModule} from './LazyModule';
+
+const Todo: FunctionComponent<any> = () => {
+    return (
+        <LazyModule scope="todo" component="./List">
+            <LazyModule.Component />
+        </LazyModule>
+    );
+};
+
+export {Example};
 ```
 
 ## Options
