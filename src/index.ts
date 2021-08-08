@@ -1,1 +1,2 @@
-export * from './component-loader';
+export * from './addScript';
+export * from './remoteLoader';

@@ -1,6 +1,6 @@
-# @monolithed/remote-component-loader
+# @monolithed/module-federation-loader
 
-[![Build Status](https://travis-ci.org/monolithed/remote-component-loader.png)](https://travis-ci.org/monolithed/remote-component-loader)
+[![Build Status](https://travis-ci.org/monolithed/module-federation-loader.png)](https://travis-ci.org/monolithed/module-federation-loader)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
 
 A Webpack module for dynamically loading remote components
@@ -12,13 +12,13 @@ Install with npm or Yarn:
 **npm**:
 
 ```
-npm install @monolithed/remote-component-loader --save
+npm install @monolithed/module-federation-loader --save
 ```
 
 **Yarn**:
 
 ```
-yarn add @monolithed/remote-component-loader
+yarn add @monolithed/module-federation-loader
 ```
 
 ## Basic usage
@@ -27,22 +27,59 @@ yarn add @monolithed/remote-component-loader
 import React, {
     FunctionComponent,
     Suspense,
-    lazy
+    lazy,
+    useState,
+    useEffect
 } from 'react';
 
-import {useScript} from '@monolithed/use-script-hook';
-import {componentLoader} from '@monolithed/remote-component-loader';
+import ky from 'ky';
+import {addScript, remoteLoader} from '@monolithed/module-federation-loader';
 
 type Props = {
-    src: string;
-    scope: string;
+    bundle: string;
     module: string;
 };
 
-const LazyService: FunctionComponent<Props> = ({children, src, scope, module}): JSX.Element => {
-    const {loaded, failed} = useScript({src});
-    const remoteModule = componentLoader({scope, module});
-   
+type BundleResponse = {
+    src: string;
+};
+
+const fetchBundle = (name: string): Promise<BundleResponse> => {
+    const request = ky.get('/bundle', {
+        searchParams: {name}
+    });
+
+    return request.json<BundleResponse>();
+};
+
+const useBundle = (name: string) => {
+    const [loading, setLoading] = useState<boolean>(true);
+    const [bundle, setBundle] = useState<HTMLScriptElement>();
+
+    useEffect(() => {
+        let abortController = new AbortController();
+
+        (async (): Promise<void> => {
+            let src = await fetchBundle(name);
+
+            const {script} = await addScript({src});
+
+            setBundle(script);
+            setLoading(false);
+        })();
+
+        return () => {
+            abortController.abort();
+            bundle?.remove();
+        };
+    }, [name]);
+
+    return {loading};
+};
+
+const LazyService: FunctionComponent<Props> = ({children, bundle, module}): JSX.Element => {
+    const {loading} = useBundle(bundle);
+    const remoteModule = remoteLoader({bundle, module});
     const RemoteComponent = lazy(remoteModule);
 
     return (
@@ -55,7 +92,7 @@ const LazyService: FunctionComponent<Props> = ({children, src, scope, module}): 
 
 ## Options
 
-* **scope** (required)
+* **bundle** (required)
 * **module** (required)
 
 ## Publishing

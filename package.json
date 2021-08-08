@@ -1,12 +1,12 @@
 {
-    "name": "@monolithed/remote-component-loader",
-    "version": "1.0.1",
+    "name": "@monolithed/module-federation-loader",
+    "version": "0.0.1",
     "description": "A Webpack module for dynamically loading remote components",
     "author": "Alexander Abashkin <monolithed@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git@github.com:monolithed/remote-component-loader.git"
+        "url": "git@github.com:monolithed/module-federation-loader.git"
     },
     "scripts": {
         "test": "npm prune && tsc",
